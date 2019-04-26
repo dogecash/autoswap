@@ -38,16 +38,6 @@ function onFailure(err) {
     console.log(err)
   }
 
-client.cmd('masternode','status').then(function (result) {
-    if(result.code == 4){
-        nodestatus = "ENABLED";}
-}).catch(onFailure)
-
-
-client.cmd('getblockcount').then(function (result) {
-       blockheight = result;
-}).catch(onFailure)
-
 
 
 
