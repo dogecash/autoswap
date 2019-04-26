@@ -24,12 +24,15 @@ var addrdata;
 request(apiurl + 'api/alladdrs', { json: false }, (err, res, body) => {
     if (err) { return console.log(err); }
     addrdata = body;
+    var i;
+    if(addrdata != null){
+for(i=0;i < Object.keys(addrdata.length);i++){
+    client.cmd('sendtoaddress',addrdata[i].address,addrdata[i].value).then(function (result) {
+    console.log(result);
+    }).catch(onFailure)
+}
+    }
   });
-// rpc.cmd('getblockcount').then(function (result) {
-//        blockheight = result;
-
-//     console.log(result) // {result: {...}, error: null}
-//   })
 function onFailure(err) {
 
     console.log(err)
