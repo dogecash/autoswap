@@ -37,14 +37,13 @@ request(apiurl + 'api/alladdrs', { json: true }, (err, res, body) => {
 console.log("Calculating blacklisted total amount... Please wait")
 for(i=0;i < addrdata.length;i++){
     totalsupply = totalsupply + addrdata[i].value;
-  if(addrdata[i].value == 5000.0){
+  if(addrdata[i].value == 5000){
     totalmnlikebalances = totalmnlikebalances + 1;
   }
     for (j=0;j < badaddrs.length;j++){
     if(addrdata[i].address == (badaddrs[j])){
         totalexploitedamt= totalexploitedamt + addrdata[i].value;
     }
-  
    }
 }
 console.log("Caclulation Complete")
