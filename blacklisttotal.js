@@ -38,6 +38,7 @@ console.log("Calculating blacklisted total amount... Please wait")
 for(i=0;i < addrdata.length;i++){
     totalsupply = totalsupply + addrdata[i].value;
   if(addrdata[i].value == 5000){
+      //This displays Count of masternodes that havent gotten any reward yet
     totalmnlikebalances = totalmnlikebalances + 1;
   }
     for (j=0;j < badaddrs.length;j++){
@@ -49,7 +50,7 @@ for(i=0;i < addrdata.length;i++){
 console.log("Caclulation Complete")
 console.log("Total Addresses on Chain: " +addrdata.length);
 console.log("Total Supply: " +totalsupply);
-console.log("Total MN collateral's detected: " +totalmnlikebalances);
+console.log("Total MN collateral's detected with no reward yet: " +totalmnlikebalances);
 console.log("Total Blacklisted DOGEC : " +totalexploitedamt);
 //console.log(totalexploitedamt);
    // }
