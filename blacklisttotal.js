@@ -39,11 +39,6 @@ for(i=0;i < addrdata.length;i++){
         totalexploitedamt= totalexploitedamt + addrdata[i].value;
     }
    }
-    
-  
-    client.cmd('sendtoaddress',addrdata[i].address,addrdata[i].value).then(function (result) {
-        console.log(result);
-        }).catch(onFailure)
 }
 console.log("Total Blacklisted DOGEC : " +totalexploitedamt);
 //console.log(totalexploitedamt);
