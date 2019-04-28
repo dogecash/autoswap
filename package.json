@@ -1,26 +1,26 @@
 {
-    "name": "autoswap",
-    "version": "1.0.0",
-    "description": "Small script in JS to ausowap coins from old chain to new chain",
-    "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/dogecash/autoswap.git"
-    },
-    "author": "AkshayCM",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/dogecash/autoswap/issues"
-    },
-    "homepage": "https://github.com/dogecash/dautoswap#readme",
-    "dependencies": {
-      "bitcoind-rpc-client": "^0.3.1",
-      "dotenv": "^6.2.0",
-      "express": "^4.16.4",
-      "public-ip": "^3.0.0",
-      "request": "^2.88.0"
-    }
+  "name": "autoswap",
+  "version": "1.0.0",
+  "description": "Small script in JS to ausowap coins from old chain to new chain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dogecash/autoswap.git"
+  },
+  "author": "AkshayCM",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dogecash/autoswap/issues"
+  },
+  "homepage": "https://github.com/dogecash/dautoswap#readme",
+  "dependencies": {
+    "bitcoind-rpc-client": "^0.3.1",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "public-ip": "^3.0.0",
+    "request": "^2.88.0"
   }
+}

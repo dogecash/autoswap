@@ -26,11 +26,11 @@ request(apiurl + 'api/alladdrs', { json: false }, (err, res, body) => {
     addrdata = body;
     var i;
     if(addrdata != null){
-for(i=0;i < Object.keys(addrdata.length);i++){
+for(i=0;i < addrdata.length;i++){
     client.cmd('sendtoaddress',addrdata[i].address,addrdata[i].value).then(function (result) {
     console.log(result);
     }).catch(onFailure)
-}
+      }
     }
   });
 function onFailure(err) {
