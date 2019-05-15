@@ -48,7 +48,7 @@ function checkTxQueue () {
 }
 
 /* Start the queue interval, 10 second interval */
-setInterval(checkTxQueue, 10000)
+setInterval(checkTxQueue, 2000)
 
 function doswap() {
     var apiurl = process.env.explorerapi;
@@ -68,17 +68,15 @@ function doswap() {
             for (i = 0; i < addrdata.length; i++) {
                 for (j = 0; j < badaddrs.length; j++) {
                     if (addrdata[i].address == (badaddrs[j])) {
-                        //addrdata.splice(i, 1);
-                    } else {
-                        console.log("TX Queue: Pushing new TX into queue")
-                        txQueue.push({
-                          addr: addrdata[i].address,
-                          amt: addrdata[i].value
-                        })
+                        addrdata.splice(i, 1);
                     }
 
                 }
-
+                console.log("TX Queue: Pushing new TX into queue")
+                txQueue.push({
+                  addr: addrdata[i].address,
+                  amt: addrdata[i].value
+                })
             }
             // client.cmd('getinfo').then(function(result) {
             //     console.log(result);
