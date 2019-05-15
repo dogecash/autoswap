@@ -45,26 +45,24 @@ function checkTxQueue () {
 /* Start the queue interval, 10 second interval */
 setInterval(checkTxQueue, 2000)
 
+/* Validate an address, if it's good it gets pushed into the Queue, else it gets ignored */
+function validateAddr (tx) {
+	if (badaddrs.toString().includes(tx.addr)) return console.error("Rejecting bad address")
+	txQueue.push(tx)
+}
+
 function doswap() {
     var apiurl = process.env.explorerapi;
     var addrdata;
     //getalladdrs
-    var i, j,removecount;
+    var i;
     request(apiurl + 'api/alladdrs', { json: true }, (err, res, body) => {
         if (err) { return console.log(err); }
         addrdata = body;
-        removecount = 0;
         if (addrdata != null) {
             for (i = 0; i < addrdata.length; i++) {
-              for (j = 0; j <= badaddrs.length; j++) {
-                if (addrdata[i].address == (badaddrs[j])) {
-                    addrdata.splice(i, 1);removecount = removecount +1;
-                }
-                
-              }
-              console.log("Remove count " + removecount)
               console.log("TX Queue: Pushing new TX into queue")
-                txQueue.push({
+                validateAddr({
                   addr: addrdata[i].address,
                   amt: addrdata[i].value
                 })
@@ -82,5 +80,5 @@ doswap();
 
 function onFailure(err) {
 
-    console.log(err)
+    console.error(err)
 }
