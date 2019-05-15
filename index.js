@@ -11,7 +11,7 @@ var config = {
 var client = new RpcClient(config);
 //Set RPC connection stuff
 //END RPC Setup
-
+var txcount =0;
 //Start API Vars
 
 var badaddrs = ["DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DT9LxyfGn91gAWhXedSf81B7ATLseSxuVv",
@@ -33,17 +33,26 @@ var txQueue = []
 
 /* Check for queued TX'es at a regular interval, to prevent overloading the wallet */
 function checkTxQueue () {
-  if (txQueue.length > 0) { // Don't check the queue if it's empty
+  if (txQueue.length > 0 && txcount < txQueue.length) { // Don't check the queue if it's empty
     console.log("TX Queue: Sending TX " + txQueue.length)
-    if (!txQueue[0].addr || !txQueue[0].amt) return // Make sure a TX isn't malformed
+    
+    if (!txQueue[txcount].addr || !txQueue[txcount].amt) return // Make sure a TX isn't malformed
+    console.log("Sending to adddr :" + txQueue[txcount].addr +" Val:" + txQueue[txcount].amt);
+    txcount = txcount + 1;
+    console.log(txcount + "TXCOUNT")
+
     client.cmd('sendtoaddress', txQueue[0].addr, txQueue[0].amt).then(function(result) {
       console.log(result)
     }).catch(onFailure)
   }
+ else{
+   process.exit(0)
+ }
 }
-
+process.on('exit', function(code) {  
+  return console.log(`Done with code ${code}`);
+});
 /* Start the queue interval, 10 second interval */
-setInterval(checkTxQueue, 2000)
 
 /* Validate an address, if it's good it gets pushed into the Queue, else it gets ignored */
 function validateAddr (tx) {
@@ -67,9 +76,8 @@ function doswap() {
                   amt: addrdata[i].value
                 })
             }
-            // client.cmd('getinfo').then(function(result) {
-            //     console.log(result);
-            // }).catch(onFailure)
+            setInterval(checkTxQueue, 7)
+
         }
     });
 }
