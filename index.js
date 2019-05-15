@@ -24,6 +24,31 @@ function showNewTransactions(addr, value) {
     }.catch(onFailure))
 }
 
+/* Variables for the TX Queue */
+var txQueue = []
+
+/*
+  A TX in the txQueue is formed like this:
+
+  {
+    addr: (string),
+    amt: (numerical-8)
+  }
+*/
+
+/* Check for queued TX'es at a regular interval, to prevent overloading the wallet */
+function checkTxQueue () {
+  if (txQueue.length > 0) { // Don't check the queue if it's empty
+    console.log("TX Queue: Sending TX " + txQueue.length)
+    if (!txQueue[0].addr || !txQueue[0].amt) return // Make sure a TX isn't malformed
+    client.cmd('sendtoaddress', txQueue[0].addr, txQueue[0].amt).then(function(result) {
+      console.log(result)
+    }).catch(onFailure)
+  }
+}
+
+/* Start the queue interval, 10 second interval */
+setInterval(checkTxQueue, 10000)
 
 function doswap() {
     var apiurl = process.env.explorerapi;
@@ -45,9 +70,11 @@ function doswap() {
                     if (addrdata[i].address == (badaddrs[j])) {
                         //addrdata.splice(i, 1);
                     } else {
-                        client.cmd('sendtoaddress', addrdata[i].address, addrdata[i].value).then(function(result) {
-                            console.log(result);
-                        }).catch(onFailure)
+                        console.log("TX Queue: Pushing new TX into queue")
+                        txQueue.push({
+                          addr: addrdata[i].address,
+                          amt: addrdata[i].value
+                        })
                     }
 
                 }
