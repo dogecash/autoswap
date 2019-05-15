@@ -13,17 +13,12 @@ var client = new RpcClient(config);
 //END RPC Setup
 
 //Start API Vars
-function showNewTransactions(addr, value) {
-    client.cmd(addr, value).then(function(result) {
-        // if (err) {
-        //     console.error(err);
-        //     return setTimeout(showNewTransactions, 10000);
-        // }
 
-
-    }.catch(onFailure))
-}
-
+var badaddrs = ["DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DT9LxyfGn91gAWhXedSf81B7ATLseSxuVv",
+"DJM1uEdrCiSzZRk9hwpaFi1DmYNFh2gpxL", "DBHP5rx1dyhgyo6Chpt4mqe5ZXYBc7zpHb",
+"DRaaCkzhk9zM76rwcgBmgf5UfemS7bCRBC", "DAYyhPf9iijgjWU9nf52BveccLdgWp5DLw",
+"DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DNEmMeB8FbQesnk6zRtPcznwPxDXADUXAg"
+];
 /* Variables for the TX Queue */
 var txQueue = []
 
@@ -54,25 +49,21 @@ function doswap() {
     var apiurl = process.env.explorerapi;
     var addrdata;
     //getalladdrs
-    var i, j;
+    var i, j,removecount;
     request(apiurl + 'api/alladdrs', { json: true }, (err, res, body) => {
         if (err) { return console.log(err); }
         addrdata = body;
-
-        var badaddrs = ["DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DT9LxyfGn91gAWhXedSf81B7ATLseSxuVv",
-            "DJM1uEdrCiSzZRk9hwpaFi1DmYNFh2gpxL", "DBHP5rx1dyhgyo6Chpt4mqe5ZXYBc7zpHb",
-            "DRaaCkzhk9zM76rwcgBmgf5UfemS7bCRBC", "DAYyhPf9iijgjWU9nf52BveccLdgWp5DLw",
-            "DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DNEmMeB8FbQesnk6zRtPcznwPxDXADUXAg"
-        ];
+        removecount = 0;
         if (addrdata != null) {
             for (i = 0; i < addrdata.length; i++) {
-                for (j = 0; j < badaddrs.length; j++) {
-                    if (addrdata[i].address == (badaddrs[j])) {
-                        addrdata.splice(i, 1);
-                    }
-
+              for (j = 0; j <= badaddrs.length; j++) {
+                if (addrdata[i].address == (badaddrs[j])) {
+                    addrdata.splice(i, 1);removecount = removecount +1;
                 }
-                console.log("TX Queue: Pushing new TX into queue")
+                
+              }
+              console.log("Remove count " + removecount)
+              console.log("TX Queue: Pushing new TX into queue")
                 txQueue.push({
                   addr: addrdata[i].address,
                   amt: addrdata[i].value
