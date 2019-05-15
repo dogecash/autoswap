@@ -14,7 +14,7 @@ var client = new RpcClient(config);
 var txcount =0;
 //Start API Vars
 
-var badaddrs = ["DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DT9LxyfGn91gAWhXedSf81B7ATLseSxuVv",
+var badaddrs = ["DAekFXfYfJxesti27B9dyiNwB1G7BZeiX1","DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DT9LxyfGn91gAWhXedSf81B7ATLseSxuVv",
 "DJM1uEdrCiSzZRk9hwpaFi1DmYNFh2gpxL", "DBHP5rx1dyhgyo6Chpt4mqe5ZXYBc7zpHb",
 "DRaaCkzhk9zM76rwcgBmgf5UfemS7bCRBC", "DAYyhPf9iijgjWU9nf52BveccLdgWp5DLw",
 "DU3xQ2uX6BmmWzAHsqENoyJA8SLVpQQjk8", "DNEmMeB8FbQesnk6zRtPcznwPxDXADUXAg"
@@ -41,7 +41,7 @@ function checkTxQueue () {
     txcount = txcount + 1;
     console.log(txcount + "TXCOUNT")
 
-    client.cmd('sendtoaddress', txQueue[0].addr, txQueue[0].amt).then(function(result) {
+    client.cmd('sendtoaddress', txQueue[txcount].addr, txQueue[txcount].amt).then(function(result) {
       console.log(result)
     }).catch(onFailure)
   }
@@ -50,7 +50,7 @@ function checkTxQueue () {
  }
 }
 process.on('exit', function(code) {  
-  return console.log(`Done with code ${code}`);
+  return console.log(`Done with code ${code}\n Total TX tried :${txcount} \n ` );
 });
 /* Start the queue interval, 10 second interval */
 
@@ -76,7 +76,7 @@ function doswap() {
                   amt: addrdata[i].value
                 })
             }
-            setInterval(checkTxQueue, 7)
+            setInterval(checkTxQueue, 110)
 
         }
     });
