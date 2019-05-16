@@ -64,6 +64,7 @@ function checkTxQueue() {
             }
         }
 
+		rawTx = rawTx.slice(0, -1) + ''
         rawTx += '}' // Close the JSON object of TX'es
             //  console.log(rawTx)
         client.cmd('sendmany', "\"\"" /* <-- Replace with account if needed */ , JSON.parse(rawTx)).then(function(result) {
