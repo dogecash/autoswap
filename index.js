@@ -86,7 +86,7 @@ function validateAddr(tx) {
 
 /* Form a raw sendmany transaction using the Addr and Amt */
 function formTx(addr, amt, len) {
-    return '"' + addr + '": ' + amt + ((len < 24) ? ',' : '')
+    return '"' + addr + '": ' + amt + ((len > 24) ? ',' : '')
 }
 
 function doswap() {
